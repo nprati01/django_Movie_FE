@@ -1,10 +1,12 @@
 import React, { useState, useEffect} from 'react';
 import './App.css';
 import MovieList from './components/movie-list';
+import MovieDetails from './components/movie-details';
 
 
 function App() {
   const [movies, setMovie] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() =>{
     fetch("http://127.0.0.1:8000/movies", {
@@ -20,7 +22,7 @@ function App() {
   }, [])
 
   const movieClicked = movie => {
-    console.log(movie.title);
+    setSelectedMovie(movie);
   }
 
   return (
@@ -29,8 +31,8 @@ function App() {
         <h1>Movie Rater</h1>
       </header>
       <div className='layout'>
-      <MovieList movies={movies} movieClicked={movieClicked}/>
-      <div>Movie Detail</div>
+      <MovieList movies={movies} movieClicked={movieClicked} />
+      <MovieDetails movie={selectedMovie} />
 
       </div>
     </div>
